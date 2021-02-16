@@ -2,7 +2,6 @@ import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { StockSymbol } from '../models/stocksymbol';
 import { StockbodyComponent } from '../stockbody/stockbody.component';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
