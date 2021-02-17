@@ -1,12 +1,30 @@
-<mat-form-field appearence='fill'>
-<mat-select name="category" [(value)]="selectedcategory" (selectionChange)="searchbycategory(selectedcategory)">
-  <mat-option></mat-option>
-  <mat-option [value]="'general'">General</mat-option>
-  <mat-option [value]="'forex'">forex</mat-option>
-  <mat-option [value]="'crypto'">crypto</mat-option>
-  <mat-option [value]="'merger'">merger</mat-option>
-</mat-select>
+<div style="float: inline-start;">
+<H3>Search by Category</H3>
+<mat-form-field appearance="fill">
+  <mat-label>Filter By Category</mat-label>
+  <mat-select>
+    <mat-option (click)='searchbycategory(category)' *ngFor="let category of categories" [value]="category">
+      {{category}}
+    </mat-option>
+  </mat-select>
 </mat-form-field>
+</div>
+<form class="example-form" style="float: inline-end; ;">
+  <h3>Search by company</h3>
+    <input type="text"
+           placeholder="Select Symbol"
+           aria-label="Number"
+           matInput
+           [formControl]="mycontrol"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <button mat-button style='border-width: 2px;  border-style: groove; border-color: lightgray;' type="submit" (click)='searchbycompany()'>search</button>
+</form>
+
 <div class='news'>
 <div class="container" *ngFor="let item of list">
     <div class="photo">
@@ -16,7 +34,6 @@
       <div class="title">{{item.headline}}...</div>
       <div class="info">{{item.summary}}...<br> <a href={{item.url}}>Read more</a></div>
       <div class="poster"> {{item.source}} on {{item.datetime}}</div>
-
     </div>
   </div>
 </div>

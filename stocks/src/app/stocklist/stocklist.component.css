@@ -1,0 +1,9 @@
+.x{width: 20%; display:inline-block;}
+@media only screen and (max-width: 1300px) {
+    .x{width: 25%; display:inline-block;}
+
+ }
+ @media only screen and (max-width: 700px) {
+    .x{width: 33%; display:inline-block;}
+
+ }

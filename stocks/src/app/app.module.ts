@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule} from '@angular/material/form-field'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
@@ -13,10 +15,12 @@ import { ChartDataService } from './chart.data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NewsComponent } from './news/news.component';
 import { FutureComponent } from './future/future.component';
-import { CompareComponent } from './compare/compare.component';
+import { CompareComponent, DialogOverviewExampleDialog } from './compare/compare.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableExporterModule } from 'mat-table-exporter';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     FutureComponent,
     CompareComponent,
     HomeComponent,
+    DialogOverviewExampleDialog,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,12 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     MatFormFieldModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTableExporterModule,
+    ReactiveFormsModule
   ],
   providers: [ChartDataService],
   bootstrap: [AppComponent],

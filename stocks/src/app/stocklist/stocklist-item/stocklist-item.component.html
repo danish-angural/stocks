@@ -1,6 +1,58 @@
-<a href="#" class="list-group-item" 
+<!-- <a href="#" class="list-group-item" 
     (click)="onSelected()">
     <span>{{symbol.title}}</span>
     <span class="badge">{{symbol.price}}</span>
     <span class="badge">{{symbol.change}}</span>
+</a> -->
+<a href="#" class="list-group-item" 
+    (click)="onSelected()">
+    <mat-card class='card'>
+        <mat-card-title>
+            {{symbol.title}}
+        </mat-card-title>
+    <mat-card-actions class="list">
+    <div class='wrapper'>
+        <label>price</label>
+        <button name="price" mat-button disabled>{{symbol.price}}</button>
+    </div>
+    <div class='wrapper'>
+        <label>open</label>
+        <button name="price" mat-button disabled>{{symbol.open}}</button>
+    </div>
+    <div class='wrapper'>
+        <label>high</label>
+        <button name="price" mat-button disabled>{{symbol.high}}</button>
+    </div>
+    <div class='wrapper'>
+        <label>low</label>
+    <button name="price" mat-button disabled>{{symbol.low}}</button>
+    </div>
+    
+    </mat-card-actions>
+    <mat-card-actions class="list">
+        <div class='wrapper'>
+            <label>volume</label>
+            <button name="price" mat-button disabled>{{symbol.volume}}</button>
+        </div>
+        <div class='wrapper'>
+            <label>change</label>
+            <button name="price" mat-button disabled>{{symbol.change}}</button>
+        </div>
+        <div class='wrapper'>
+            <label>%change</label>
+            <button name="price" mat-button disabled>{{symbol.percent_change}}</button>
+        </div>
+        <div class='wrapper'>
+            <div *ngIf="symbol.change<=0; else greendot"><span class="reddot"></span></div>
+            <ng-template #greendot><span class="greendot"></span></ng-template>
+
+        </div>
+    </mat-card-actions>
+    </mat-card>
 </a>
+<script>
+    $('.card').hover(function(){
+
+$('.card').animate("");
+});
+</script>

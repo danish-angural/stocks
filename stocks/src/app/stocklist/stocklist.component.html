@@ -1,5 +1,17 @@
-<section>
-    <div class="list-group">
-        <stocklist-item *ngFor="let symbol of symbols" [symbol]="symbol" (symbolSelected)="onStockSymbolSelected($event)"></stocklist-item>
-    </div>
-</section>
+<form class="example-form" style="float: inline-end; ;">
+        <h3>Add company</h3>
+          <input type="text"
+                 placeholder="Select Symbol"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="mycontrol"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <button mat-button style='border-width: 2px;  border-style: groove; border-color: lightgray;' type="submit" (click)='addcompany()'>search</button>
+      </form>
+
+        <stocklist-item *ngFor="let symbol of symbols" [symbol]="symbol" (symbolSelected)="onStockSymbolSelected($event)"class='x'></stocklist-item>

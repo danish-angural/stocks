@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+  <p>Add Column</p>
+    <mat-label>Enter Symbol (case insensitive)</mat-label>
+    <input matInput [(ngModel)]="data.sym" placeholder="">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.sym" cdkFocusInitial>Ok</button>
+</div>

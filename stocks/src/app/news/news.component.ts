@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { symb } from './US-Stock-Symbols';
 @Component({
   selector: 'app-news',
@@ -10,8 +12,12 @@ import { symb } from './US-Stock-Symbols';
 })
 export class NewsComponent implements OnInit {
   constructor(private http: HttpClient) { }
-  control=new FormControl();
   selectedcategory='general';
+  categories=['general', 'forex', 'crypto', 'merger'];
+  x=(new symb).symbs;
+  mycontrol=new FormControl();
+  filteredOptions: Observable<string[]>;
+
   ngOnInit() {
     this.http.get("https://finnhub.io/api/v1/news?category=general&token=c0kfulv48v6und6rip8g").subscribe((res)=>{
       this.list=res;
@@ -22,6 +28,15 @@ export class NewsComponent implements OnInit {
         this.list[elem]['datetime']=stringify(d.getHours())+':'+stringify(d.getMinutes())+','+stringify(d.getDate())+'/'+stringify(d.getMonth())+'/'+stringify(d.getFullYear());
       }
     });
+    this.filteredOptions = this.mycontrol.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.x.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
   apikey='c0kfulv48v6und6rip8g';
   list;
@@ -37,14 +52,20 @@ export class NewsComponent implements OnInit {
         }
       });
     console.log(this.list);  }
-  searchbycompany(company){
-    var date=new Date();
-    var now=date.getFullYear()+'-'+date.getMonth()+"-"+date.getDay();
-    var then=date.getFullYear()+'-'+stringify(date.getMonth()-1)+"-"+date.getDay();
-    this.http.get("https://finnhub.io/api/v1/company-news?symbol="+company+"&from="+now+"&to="+then+"&token=c0kfulv48v6und6rip8g").subscribe((res)=>{
+  searchbycompany(){
+    var company=this.mycontrol.value;
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var now = yyyy + '-' + mm + '-' + dd;
+    var mm = String(today.getMonth()).padStart(2, '0'); //January is 0!
+    var then = yyyy + '-' + mm + '-' + dd;
+
+     this.http.get("https://finnhub.io/api/v1/company-news?symbol="+company+"&from="+then+"&to="+now+"&token=c0kfulv48v6und6rip8g").subscribe((res)=>{
       this.list=res;
       this.list.shift();
-      console.log(this.list);
+      console.log(this.list, then);
       var elem;
       for(elem in this.list){
         var d=new Date(this.list[elem]['datetime']);
